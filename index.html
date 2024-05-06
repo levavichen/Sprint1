@@ -7,13 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/style.css">
-
+    <h1 class="header">MINES SWEEPER</h1>
 </head>
 
-<body onload="onInit()" >
+<body onload="onInit()">
     <table class="board-container">
         <tbody class="board"></tbody>
-
+        <div class="buttons-container">
+            <button onclick="gameSetup(4, 2)">Beginner</button>
+            <button onclick="gameSetup(8, 14)">Medium</button>
+            <button onclick="gameSetup(12, 32)">Expert</button>
+        </div>
     </table>
 
     <script src="js/utils.js"></script>
