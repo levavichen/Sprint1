@@ -2,23 +2,30 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
     <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/style.css">
     <h1 class="header">MINES SWEEPER</h1>
 </head>
 
 <body onload="onInit()">
+
+    <div class="buttons-container">
+        <button onclick="gameSetup(4, 2)">Beginner</button>
+        <button onclick="gameSetup(8, 14)">Medium</button>
+        <button onclick="gameSetup(12, 32)">Expert</button>
+    </div>
+
+    <div class="game-status-img"></div>
+
     <table class="board-container">
         <tbody class="board"></tbody>
-        <div class="buttons-container">
-            <button onclick="gameSetup(4, 2)">Beginner</button>
-            <button onclick="gameSetup(8, 14)">Medium</button>
-            <button onclick="gameSetup(12, 32)">Expert</button>
-        </div>
     </table>
+
+    <h3 class="heading">REMAINING LIVES</h3>
+    <div class="remaining-lives"></div>
 
     <script src="js/utils.js"></script>
     <script src="js/mines.js"></script>
