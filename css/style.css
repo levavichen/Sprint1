@@ -1,4 +1,4 @@
-html,body {
+html{
     background-color: bisque;
 }
 
@@ -27,7 +27,6 @@ html,body {
 
 .shown {
     background-color: indianred;
-    
     width: 40px;
     height: 40px;
 }
@@ -35,7 +34,7 @@ html,body {
 
 .header {
     text-align: center;
-    font-family: fantasy;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 50px;
     padding: 10px;
     margin-bottom: 0%;
@@ -82,7 +81,7 @@ footer {
 .heading {
     text-align: center;
     margin-bottom: 5px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:'Courier New', Courier, monospace
 }
 
 .mine {
@@ -95,14 +94,66 @@ footer {
     height: 2em;
 }
 
-.game-status-img{
+.game-status-img {
     text-align: center;
 }
 
-.smiley{
+.smiley {
     border: solid;
     border-radius: 50px;
     background-color: rgb(205, 198, 198);
     width: 50px;
     height: auto;
+}
+
+.hints {
+    width: 100px;
+    height: auto;
+}
+
+.hints-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 100%;
+    width: 100px;
+    top: 0;
+    /* padding-right: 10px; */
+}
+
+.centered-container {
+    display: inline-block;
+    position: relative;
+
+}
+
+.wrapper {
+    text-align: center;
+
+}
+
+.exterminator {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    left: 100%;
+    top: 80px;
+    width: 150px;
+    height: 50px;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.dark-mode {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: center;
+    left: 100%;
+    top: 20px;
+    width: 150px;
+    height: 50px;
+    align-items: center;
+    margin-left: 10px;
 }

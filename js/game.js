@@ -13,11 +13,12 @@ var gSmiles = {
 var gBoard
 var gcounter
 var gLives
+var gHints
 var isFirstClick
 
 var gLevel = {
-    SIZE: 4,
-    MINES: 2
+    SIZE: 8,
+    MINES: 14
 }
 
 var gGame = {
@@ -25,21 +26,24 @@ var gGame = {
     shownCount: 0,
     markedCount: 0,
     secsPassed: 0,
+    isHint: false
 }
 
 function gameSetup(size, mines) {
     gLevel.SIZE = size
     gLevel.MINES = mines
-    gLives = 3
+
     onInit()
 }
 
 function onInit() {
+    gHints = 3
     gLives = 3
     gBoard = buildBoard(gLevel.SIZE)
     renderBoard(gBoard)
     renderlives()
     renderSmiley(gSmiles.normal)
+    renderHints()
 
     gGame.isOn = true
     isFirstClick = true
@@ -93,7 +97,6 @@ function renderBoard(gBoard) {
                 value = MARK
             }
 
-
             strHTML += `<td class="${className}"  
             onclick="onCellClicked(this, ${i}, ${j})" 
             oncontextmenu="onCellMarked(this) " data-i="${i}" data-j="${j}">${value} </td>`
@@ -109,16 +112,19 @@ function renderBoard(gBoard) {
 function onCellClicked(elCell, i, j) {
     const rowIdx = +elCell.dataset.i
     const colIdx = +elCell.dataset.j
+    const cell = gBoard[i][j]
+
+    if (!gGame.isOn) return
+
+    if (gGame.isHint) {
+        showHint(gBoard, i, j)
+    }
 
     if (isFirstClick) {
         createMines(gBoard, rowIdx, colIdx)
         setMinesNegsCount(gBoard)
         isFirstClick = false
     }
-
-    const cell = gBoard[i][j]
-
-    if (!gGame.isOn) return
 
     if (cell.minesAroundCount === 0) expandShown(gBoard, elCell, i, j)
 
@@ -158,7 +164,6 @@ function onCellMarked(elCell) {
 
     if (!gGame.isOn) return
 
-
     if (!cell.isShown && !cell.isMarked) {
         cell.isMarked = true
         gGame.markedCount++
@@ -188,10 +193,7 @@ function checkGameOver() {
     gGame.isOn = false
 }
 
-function expandShown(board, elCell, i, j) {
-
-    const rowIdx = +elCell.dataset.i
-    const colIdx = +elCell.dataset.j
+function expandShown(board, elCell, rowIdx, colIdx) {
 
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
         if (i < 0 || i >= gBoard.length) continue
@@ -200,31 +202,15 @@ function expandShown(board, elCell, i, j) {
             if (j < 0 || j >= gBoard[i].length) continue
             if (i === rowIdx && j === colIdx) continue
             var cell = board[i][j]
-            if (cell.minesAroundCount != 0) {
+            if (!cell.isShown) {
                 cell.isShown = true
+                if (cell.minesAroundCount === 0) {
+                    expandShown(board, elCell, i, j)
+                }
             }
         }
     }
+
     renderBoard(gBoard)
 }
 
-function renderlives() {
-
-    const elRemainingLives = document.querySelector('.remaining-lives')
-    var strHTML = ''
-
-    for (var i = 0; i < gLives; i++) {
-
-        strHTML += `<span class = "lives"><img src="img/heart.png" alt="life" class="heart"></span>`
-
-    }
-    elRemainingLives.innerHTML = strHTML
-}
-
-function renderSmiley(currSmiley) {
-    const elGameStatusImg = document.querySelector('.game-status-img')
-
-    elGameStatusImg.innerHTML = currSmiley
-    elGameStatusImg.onclick = onInit
-   
-}

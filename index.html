@@ -17,17 +17,23 @@
         <button onclick="gameSetup(8, 14)">Medium</button>
         <button onclick="gameSetup(12, 32)">Expert</button>
     </div>
-
     <div class="game-status-img"></div>
-
-    <table class="board-container">
-        <tbody class="board"></tbody>
-    </table>
+    <div class="wrapper">
+        <div class="centered-container">
+            <table class="board-container">
+                <tbody class="board"></tbody>
+            </table>
+            <div class="hints-container"></div>
+            <button class="exterminator" onclick="onExterminator()">EXTERMINATE</button>
+            <button class="dark-mode" onclick="onDarkMode()">DARK MODE</button>
+        </div>
+    </div>
 
     <h3 class="heading">REMAINING LIVES</h3>
     <div class="remaining-lives"></div>
 
     <script src="js/utils.js"></script>
+    <script src="js/extras.js"></script>
     <script src="js/mines.js"></script>
     <script src="js/game.js"></script>
 

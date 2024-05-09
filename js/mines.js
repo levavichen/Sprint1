@@ -1,5 +1,5 @@
 'use strict'
-
+var gMines = []
 
 function createMines(board, clickedCellI, clickedCellJ) {
 
@@ -11,6 +11,7 @@ function createMines(board, clickedCellI, clickedCellJ) {
         if (!board[rowIdx][colIdx].isMine) {
             board[rowIdx][colIdx].isMine = true
             i++
+            gMines.push({ rowIdx, colIdx })
         }
     }
 }
