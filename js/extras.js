@@ -1,5 +1,4 @@
 'use strict'
-var isDarkMode = false
 
 function renderlives() {
     const elRemainingLives = document.querySelector('.remaining-lives')
@@ -31,8 +30,8 @@ function renderHints() {
 }
 
 function onHint(elHint) {
-    if(!gGame.isOn)return
-    
+    if (!gGame.isOn) return
+
     elHint.src = 'img/hintOn.png'
     gGame.isHint = true
 }
@@ -49,16 +48,17 @@ function showHint(board, rowIdx, colIdx) {
             if (!cell.isShown) {
                 cell.isShown = true
                 shownCells.push(cell)
+
             }
         }
     }
-    console.log(shownCells)
+
     setTimeout(() => {
         gGame.isHint = false
 
         for (var i = 0; i < shownCells.length; i++) {
             shownCells[i].isShown = false
-            console.log(shownCells)
+
         }
         gHints--
         renderHints()
@@ -71,7 +71,7 @@ function showHint(board, rowIdx, colIdx) {
 ////MINES EXTERMINATOR///
 
 function onExterminator() {
-    if(!gGame.isOn)return
+    if (!gGame.isOn) return
 
     var exterminatedMines = []
 
@@ -90,11 +90,15 @@ function onExterminator() {
         exMine.isMine = false
         console.log(exMine)
     }
+    gLevel.MINES = gLevel.MINES -3
     setMinesNegsCount(gBoard)
+    renderGameSetup()
+
 }
 
 
 ////DARK MODE////
+var isDarkMode = false
 
 function onDarkMode() {
 
@@ -117,3 +121,57 @@ function onDarkMode() {
     }
 }
 
+////SAFE CLICK/////
+
+function onSafeClick() {
+    if (!gGame.isOn) return
+    if (!isSafeClick) return
+
+    gclicks--
+    changeSafeClickText()
+
+    var safeNotShownCells = []
+
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            const cell = gBoard[i][j]
+
+            if (!cell.isMine && !cell.isShown) {
+                safeNotShownCells.push({ i, j })
+            }
+        }
+    }
+
+    var safeNotShownCellIdx = getRandomIntInclusive(0, safeNotShownCells.length - 1)
+
+    for (var i = 0; i < safeNotShownCells.length; i++) {
+        var row = safeNotShownCells[safeNotShownCellIdx].i
+        var column = safeNotShownCells[safeNotShownCellIdx].j
+    }
+
+    var elSafeClickCell = document.querySelector(`.cell-${row}-${column}`)
+    elSafeClickCell.classList.add("safe-cell-mode")
+
+    setTimeout(() => {
+        elSafeClickCell.classList.remove("safe-cell-mode")
+
+    }, 2000)
+}
+
+function changeSafeClickText() {
+    var elSafeClickText = document.querySelector('.safe-click-text')
+    elSafeClickText.innerText = `${gclicks} clicks available`
+
+    if (gclicks === 0) {
+        elSafeClickText.innerText = 'No clicks available'
+        isSafeClick = false
+    }
+
+}
+
+///MEGA HINT////
+
+function onMegaHint() {
+    if (!gGame.isOn) return
+
+}

@@ -2,9 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- <meta charset="UTF-8"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
     <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/style.css">
     <h1 class="header">MINES SWEEPER</h1>
@@ -18,14 +15,30 @@
         <button onclick="gameSetup(12, 32)">Expert</button>
     </div>
     <div class="game-status-img"></div>
+    <div class="timer-image"><img src="img/timer.png" alt="timer-img"></div>
+    <div class="timer">
+        <h6>0</h6>
+    </div>
+    <div class="mines-count"><img src="img/mine.png" alt="mine">
+        <span class="text-mines"></span>
+    </div>
     <div class="wrapper">
         <div class="centered-container">
             <table class="board-container">
                 <tbody class="board"></tbody>
             </table>
             <div class="hints-container"></div>
-            <button class="exterminator" onclick="onExterminator()">EXTERMINATE</button>
-            <button class="dark-mode" onclick="onDarkMode()">DARK MODE</button>
+            <div class="right-buttons">
+                <button class="exterminator" onclick="onExterminator()">EXTERMINATE</button>
+                <button class="dark-mode" onclick="onDarkMode()">DARK MODE</button>
+
+                <button class="safe-click-button" onclick="onSafeClick()">Safe Click</button>
+                <h4 class="safe-click-text">3 clicks available</h4>
+                <!-- <button class="mega-hint" onclick="onMegaHint()">Mega Hint</button> -->
+
+
+
+            </div>
         </div>
     </div>
 

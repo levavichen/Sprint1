@@ -15,6 +15,9 @@ var gcounter
 var gLives
 var gHints
 var isFirstClick
+var gclicks
+var isSafeClick
+var gTimer
 
 var gLevel = {
     SIZE: 8,
@@ -37,16 +40,23 @@ function gameSetup(size, mines) {
 }
 
 function onInit() {
+    gclicks = 3
     gHints = 3
     gLives = 3
     gBoard = buildBoard(gLevel.SIZE)
+    renderGameSetup()
     renderBoard(gBoard)
     renderlives()
     renderSmiley(gSmiles.normal)
     renderHints()
+    changeSafeClickText()
+
 
     gGame.isOn = true
     isFirstClick = true
+    gMines = []
+    isSafeClick = true
+    stopTimer()
 
 }
 
@@ -123,23 +133,40 @@ function onCellClicked(elCell, i, j) {
     if (isFirstClick) {
         createMines(gBoard, rowIdx, colIdx)
         setMinesNegsCount(gBoard)
+        startTimer()
+
         isFirstClick = false
     }
 
     if (cell.minesAroundCount === 0) expandShown(gBoard, elCell, i, j)
 
     if (cell.isMarked) return
+
     if (cell.isMine) {
+        gLevel.MINES--
+        renderGameSetup()
+
         if (gLives > 1) {
+
             gLives--
             renderlives()
+
+            cell.isShown = true
+            renderBoard(gBoard)
             return
         }
-        if (gLives === 1)
+
+        if (gLives === 1) {
             gLives = 0
+            cell.isShown = true
+            renderBoard(gBoard)
+        }
+
         showAllMines()
         renderlives()
         renderSmiley(gSmiles.lose)
+        stopTimer()
+        gGame.isOn = false
 
     }
     if (!cell.isShown) {
@@ -191,6 +218,7 @@ function checkGameOver() {
     }
     renderSmiley(gSmiles.win)
     gGame.isOn = false
+    stopTimer()
 }
 
 function expandShown(board, elCell, rowIdx, colIdx) {
@@ -214,3 +242,27 @@ function expandShown(board, elCell, rowIdx, colIdx) {
     renderBoard(gBoard)
 }
 
+function startTimer() {
+    var elTimer = document.querySelector('h6')
+
+    gTimer = setInterval(function () {
+        gGame.secsPassed++
+        elTimer.innerText = gGame.secsPassed
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(gTimer)
+    gGame.secsPassed = 0
+
+}
+
+function renderGameSetup() {
+
+
+    var elTimer = document.querySelector('h6')
+    elTimer.innerText = gGame.secsPassed
+    var elTextMines = document.querySelector('.text-mines')
+    elTextMines.innerText = gLevel.MINES
+
+}

@@ -34,4 +34,6 @@ function showAllMines() {
             }
         }
     }
+    gLevel.MINES = 0
+    renderGameSetup()
 }
